@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
 });
 
 // GET   /api/songs/:id  get a specific song
-router.post("/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const song = await Song.findById(req.params.id);
     if (!song) {
@@ -40,11 +40,34 @@ router.post("/:id", async (req, res) => {
 // PUT /api/songs/:id - Update a specific song by ID
 router.put("/:id", async (req, res) => {
   try {
-    const updatedSong = await Song.findByIdAndUpdate(req.params.id, req.body, {
-      new: true, // Return the updated document
-      runValidators: true, // Ensure validations are applied during update
-    });
-  } catch (error) {}
+    const updatedSong = await Song.findByIdAndUpdate(
+      req.params.id, // Find the song by its ID from the request URL
+      req.body, // Use the request body to update the song
+      {
+        new: true, // Return the updated song (otherwise, it returns the original song)
+        runValidators: true, // Run validation for the updated fields (if any)
+      }
+    );
+    if (!updatedSong) {
+      return res.status(404).json({ message: "Song not found" }); // If the song isn't found, return a 404
+    }
+    res.json(updatedSong); // Respond with the updated song object
+  } catch (error) {
+    res.status(400).json({ message: error.message }); // Return error if something goes wrong
+  }
+});
+
+//DELETE /api/songs/:id - Delete a specific song
+router.delete("/:id", async (req, res) => {
+  try {
+    const deletedSong = await Song.findByIdAndDelete(req.params.id);
+    if (!deletedSong) {
+      res.status(404).json({ message: "song not found" });
+    }
+    res.json({ mesage: "song has been deleted successfully" });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 });
 
 module.exports = router;
