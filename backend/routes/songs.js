@@ -1,7 +1,27 @@
 const express = require("express");
 const Song = require("../models/Song");
+const { verifyToken, isAdmin } = require("../middleware/auth");
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
 
 const router = express.Router();
+
+const uploadDir = path.join(__dirname, "../uploads");
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
+}
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, uploadDir);
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+
+const upload = multer({ storage: storage });
 
 // GET   /api/songs  get all songs
 router.get("/", async (req, res) => {
@@ -14,15 +34,29 @@ router.get("/", async (req, res) => {
 });
 
 // POST   /api/songs  add/upload song
-router.post("/", async (req, res) => {
-  const song = new Song(req.body);
-  try {
-    const savedSong = await song.save();
-    res.status(201).json(savedSong);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
+router.post(
+  "/",
+  upload.fields([{ name: "audioFile" }, { name: "coverArt" }]),
+  verifyToken,
+  isAdmin,
+  async (req, res) => {
+    const { title, artist, genre } = req.body;
+
+    const song = new Song({
+      title,
+      artist,
+      genre,
+      url: `/uploads/${req.files["audioFile"][0].filename}`,
+      coverArt: `/uploads/${req.files["coverArt"][0].filename}`,
+    });
+    try {
+      const savedSong = await song.save();
+      res.status(201).json(savedSong);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
   }
-});
+);
 
 // GET   /api/songs/:id  get a specific song
 router.get("/:id", async (req, res) => {
@@ -38,7 +72,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // PUT /api/songs/:id - Update a specific song by ID
-router.put("/:id", async (req, res) => {
+router.put("/:id", verifyToken, isAdmin, async (req, res) => {
   try {
     const updatedSong = await Song.findByIdAndUpdate(
       req.params.id, // Find the song by its ID from the request URL
@@ -58,7 +92,7 @@ router.put("/:id", async (req, res) => {
 });
 
 //DELETE /api/songs/:id - Delete a specific song
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", verifyToken, isAdmin, async (req, res) => {
   try {
     const deletedSong = await Song.findByIdAndDelete(req.params.id);
     if (!deletedSong) {

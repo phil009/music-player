@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const songsRouter = require("./routes/songs");
+const usersRouter = require("./routes/users");
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ connectDB();
 
 app.use(express.json()); // Middleware to parse JSON
 app.use("/api/songs", songsRouter);
+app.use("/api/users", usersRouter);
 
 app.get("/", (req, res) => {
   res.send("Music player api is running");
