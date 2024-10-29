@@ -22,6 +22,7 @@ const SignUpPage = () => {
         </div>
         <div className="w-1/3">
           <img
+            loading="lazy"
             className="object-cover w-full h-full"
             src={signupimage}
             alt=""

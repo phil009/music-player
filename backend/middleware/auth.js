@@ -1,24 +1,36 @@
 const jwt = require("jsonwebtoken");
 
-//Middleware to verify JWT
+// Middleware to verify JWT
 const verifyToken = (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  console.log("Token:", token);
-  if (!token) return res.status(401).json({ message: "Unauthorized" });
+  const authHeader = req.headers.authorization;
+  console.log("Authorization header:", authHeader);
+
+  const token = authHeader && authHeader.split(" ")[1];
+  console.log("Extracted token:", token);
+
+  if (!token) {
+    console.error("No token found in the request headers.");
+    return res.status(401).json({ message: "Unauthorized" });
+  }
 
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) return res.status(403).json({ message: "invalid token" });
+    if (err) {
+      console.error("Token verification error:", err);
+      return res.status(403).json({ message: "Invalid token" });
+    }
     console.log("Decoded user:", user);
     req.user = user;
     next();
   });
 };
 
-//Middleware to check isAdmin
+// Middleware to check isAdmin
 const isAdmin = (req, res, next) => {
   console.log("User in isAdmin middleware:", req.user);
-  if (!req.user.isAdmin)
-    return res.status(403).json({ message: "Admin privilages are required" });
+  if (!req.user?.isAdmin) {
+    console.error("Access denied: User does not have admin privileges.");
+    return res.status(403).json({ message: "Admin privileges are required" });
+  }
   next();
 };
 

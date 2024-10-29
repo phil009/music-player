@@ -21,6 +21,7 @@ const LoginPage = () => {
       </div>
       <div className="hidden md:flex w-1/3">
         <img
+          loading="lazy"
           className="object-cover w-full h-full"
           src={loginimage}
           alt="Login"

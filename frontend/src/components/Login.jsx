@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { login } from "../services/auth";
+import { useUser } from "../context/UserContext";
+import { toast } from "react-toastify";
 
-const Login = ({ onLogin }) => {
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { onLogin } = useUser();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -12,6 +15,7 @@ const Login = ({ onLogin }) => {
       onLogin(user);
     } catch (error) {
       console.error("Login failed", error);
+      toast.error("Log in failed");
     }
   };
 

@@ -1,17 +1,16 @@
 import React from "react";
-import Discover from "../components/Discover";
-
 import Navigation from "../components/Navigation";
+import Upload from "../components/Upload";
 
-const MusicPlayerPage = () => {
+const AdminPage = () => {
   return (
     <>
       <div className="h-screen text-eggShell bg-richBlack relative flex">
         <Navigation />
-        <Discover />
+        <Upload />
       </div>
     </>
   );
 };
 
-export default MusicPlayerPage;
+export default AdminPage;
