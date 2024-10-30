@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const songsRouter = require("./routes/songs");
 const usersRouter = require("./routes/users");
+const path = require("path");
 
 dotenv.config();
 
@@ -20,6 +21,8 @@ const connectDB = async () => {
 };
 
 connectDB();
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use(express.json()); // Middleware to parse JSON
 app.use("/api/songs", songsRouter);

@@ -6,6 +6,7 @@ const songSchema = new mongoose.Schema({
   artist: { type: String, required: true },
   url: { type: String, required: true },
   genre: { type: String, required: true },
+  duration: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
 });
 

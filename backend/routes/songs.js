@@ -40,7 +40,7 @@ router.post(
   verifyToken,
   isAdmin,
   async (req, res) => {
-    const { title, artist, genre } = req.body;
+    const { title, artist, genre, duration } = req.body;
 
     const song = new Song({
       title,
@@ -48,6 +48,7 @@ router.post(
       genre,
       url: `/uploads/${req.files["audioFile"][0].filename}`,
       coverArt: `/uploads/${req.files["coverArt"][0].filename}`,
+      duration,
     });
     try {
       const savedSong = await song.save();
@@ -72,31 +73,46 @@ router.get("/:id", async (req, res) => {
 });
 
 // PUT /api/songs/:id - Update a specific song by ID
-router.put("/:id", verifyToken, isAdmin, async (req, res) => {
-  try {
-    const updatedSong = await Song.findByIdAndUpdate(
-      req.params.id, // Find the song by its ID from the request URL
-      req.body, // Use the request body to update the song
-      {
-        new: true, // Return the updated song (otherwise, it returns the original song)
-        runValidators: true, // Run validation for the updated fields (if any)
+router.put(
+  "/:id",
+  verifyToken,
+  isAdmin,
+  upload.fields([{ name: "coverArt" }]),
+  async (req, res) => {
+    try {
+      const updateData = req.body;
+
+      // If files are uploaded, update the file paths
+      if (req.files["audioFile"]) {
+        updateData.url = `/uploads/${req.files["audioFile"][0].filename}`;
       }
-    );
-    if (!updatedSong) {
-      return res.status(404).json({ message: "Song not found" }); // If the song isn't found, return a 404
+      if (req.files["coverArt"]) {
+        updateData.coverArt = `/uploads/${req.files["coverArt"][0].filename}`;
+      }
+
+      const updatedSong = await Song.findByIdAndUpdate(
+        req.params.id,
+        updateData,
+        { new: true, runValidators: true }
+      );
+
+      if (!updatedSong) {
+        return res.status(404).json({ message: "Song not found" });
+      }
+
+      res.json(updatedSong);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
     }
-    res.json(updatedSong); // Respond with the updated song object
-  } catch (error) {
-    res.status(400).json({ message: error.message }); // Return error if something goes wrong
   }
-});
+);
 
 //DELETE /api/songs/:id - Delete a specific song
 router.delete("/:id", verifyToken, isAdmin, async (req, res) => {
   try {
     const deletedSong = await Song.findByIdAndDelete(req.params.id);
     if (!deletedSong) {
-      res.status(404).json({ message: "song not found" });
+      return res.status(404).json({ message: "song not found" });
     }
     res.json({ mesage: "song has been deleted successfully" });
   } catch (error) {

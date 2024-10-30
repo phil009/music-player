@@ -15,6 +15,11 @@ const verifyToken = (req, res, next) => {
 
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
     if (err) {
+      if (err.name === "TokenExpiredError") {
+        return res
+          .status(401)
+          .json({ message: "Session expired. Please log in again." });
+      }
       console.error("Token verification error:", err);
       return res.status(403).json({ message: "Invalid token" });
     }
