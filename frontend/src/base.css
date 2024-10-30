@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+*,
+button {
+  cursor: url("./assets//images/direction-arrow.png"), auto;
+}
+input {
+  background: transparent;
+  outline: none;
+}
+
+.track-manage {
+  overflow: hidden;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scroll-margin: none;
+  scrollbar-color: #f0ebd8 transparent;
+  scroll-margin-left: 0;
+}
