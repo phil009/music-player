@@ -7,7 +7,9 @@ const Discover = () => {
         Discover <br /> New Music
       </h1>
       <p className="font-semi-bold text-sm mb-3">Top Charts</p>
-      <div className="grid grid-cols-2"></div>
+      <ul className="grid grid-cols-2">
+
+      </ul>
     </div>
   );
 };
