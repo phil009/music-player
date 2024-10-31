@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Discover from "../components/Discover";
-
+import { getAllSongs } from "../services/songs";
 import Navigation from "../components/Navigation";
 
 const MusicPlayerPage = () => {
