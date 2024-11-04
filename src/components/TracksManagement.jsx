@@ -76,7 +76,7 @@ const TracksManagement = ({ songs, onDeleteSuccess, onEditSong }) => {
                 <div className="w-5/12 flex justify-start items-start gap-2">
                   <div className="w-10 h-10 rounded">
                     <img
-                      src={`http://localhost:5000${song.coverArt}`}
+                      src={` https://music-player-backend-xv0z.onrender.com${song.coverArt}`}
                       alt={`${song.title} cover art`}
                       className="w-full h-full object-cover"
                     />
