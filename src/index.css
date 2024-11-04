@@ -574,8 +574,16 @@ video {
   right: 0.5rem;
 }
 
+.right-6 {
+  right: 1.5rem;
+}
+
 .top-2 {
   top: 0.5rem;
+}
+
+.top-6 {
+  top: 1.5rem;
 }
 
 .z-50 {
@@ -676,6 +684,10 @@ video {
   max-height: 9rem;
 }
 
+.max-h-96 {
+  max-height: 24rem;
+}
+
 .max-h-\[400px\] {
   max-height: 400px;
 }
@@ -747,6 +759,10 @@ video {
 .w-max {
   width: -moz-max-content;
   width: max-content;
+}
+
+.min-w-96 {
+  min-width: 24rem;
 }
 
 .max-w-3xl {
@@ -960,6 +976,11 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+.bg-gray-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(31 41 55 / var(--tw-bg-opacity));
+}
+
 .bg-opacity-30 {
   --tw-bg-opacity: 0.3;
 }
@@ -1010,10 +1031,6 @@ video {
 
 .pt-8 {
   padding-top: 2rem;
-}
-
-.pb-2 {
-  padding-bottom: 0.5rem;
 }
 
 .text-center {
@@ -1094,12 +1111,26 @@ video {
   color: rgb(13 19 33 / var(--tw-text-opacity));
 }
 
+.text-silverLakeBlue {
+  --tw-text-opacity: 1;
+  color: rgb(116 140 171 / var(--tw-text-opacity));
+}
+
+.text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
 .opacity-50 {
   opacity: 0.5;
 }
 
 .opacity-60 {
   opacity: 0.6;
+}
+
+.opacity-70 {
+  opacity: 0.7;
 }
 
 .opacity-75 {
@@ -1159,6 +1190,52 @@ input {
   scroll-margin-left: 0;
 }
 
+/* Custom styling for the seek bar */
+
+.custom-seekbar {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+       appearance: none;
+  width: 100%;
+  height: 3px;
+  background: #f0ebd8;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+}
+
+.custom-seekbar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background-color: #f0ebd8;
+  border: 2px solid #748cab;
+  border-radius: 50%;
+  cursor: pointer;
+  -webkit-transition: transform 0.2s;
+  transition: transform 0.2s;
+}
+
+.custom-seekbar::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background-color: #fff;
+  border: 2px solid #3b82f6;
+  border-radius: 50%;
+  cursor: pointer;
+  -moz-transition: transform 0.2s;
+  transition: transform 0.2s;
+}
+
+.custom-seekbar:active::-webkit-slider-thumb {
+  transform: scale(1.2);
+}
+
+.custom-seekbar:active::-moz-range-thumb {
+  transform: scale(1.2);
+}
+
 .hover\:scale-95:hover {
   --tw-scale-x: .95;
   --tw-scale-y: .95;
@@ -1168,6 +1245,11 @@ input {
 .hover\:bg-richBlack:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(13 19 33 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-silverLakeBlue:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(116 140 171 / var(--tw-bg-opacity));
 }
 
 @media (min-width: 768px) {

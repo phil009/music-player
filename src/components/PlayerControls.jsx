@@ -7,11 +7,15 @@ const PlayerControls = ({
   handleNextTrack,
   isPlaying,
   setIsPlaying,
+  setNowPlaying,
 }) => {
   return (
     <>
       {queue.length > 0 && (
-        <div className="w-full bg-richBlack p-4 flex items-center justify-between gap-8">
+        <div
+          onClick={() => setNowPlaying(true)}
+          className="w-full bg-richBlack p-4 flex items-center justify-between gap-8"
+        >
           <div className="flex items-center gap-4">
             <div className="w-14 rounded shadow-md overflow-hidden aspect-square">
               <img
@@ -29,19 +33,32 @@ const PlayerControls = ({
           </div>
           <div className="player-controls text-center">
             <div className="flex justify-center items-center gap-4">
-              <button onClick={handleNextTrack}>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleNextTrack();
+                }}
+              >
                 <Icon fontSize={24} icon={"fluent:previous-16-filled"} />
               </button>
               <button
                 className="bg-silverLakeBlue p-2 rounded-full"
-                onClick={() => setIsPlaying(!isPlaying)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsPlaying(!isPlaying);
+                }}
               >
                 <Icon
                   fontSize={24}
                   icon={isPlaying ? "mdi:pause" : "solar:play-bold"}
                 />
               </button>
-              <button onClick={handleNextTrack}>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleNextTrack();
+                }}
+              >
                 <Icon fontSize={24} icon={"fluent:next-16-filled"} />
               </button>
             </div>

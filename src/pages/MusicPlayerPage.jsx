@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Discover from "../components/Discover";
 import { getAllSongs } from "../services/songs";
 import Navigation from "../components/Navigation";
@@ -6,16 +6,26 @@ import NowPlaying from "../components/NowPlaying";
 import Queue from "../components/Queue";
 import TracksListings from "../components/TracksListings";
 import { toast } from "react-toastify";
+import ReactHowler from "react-howler";
 
 const MusicPlayerPage = () => {
+  const playerRef = useRef(null);
+  const [buffering, setBuffer] = useState(false);
+  const [currentSeek, setCurrentSeek] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [nowPlaying, setNowPlaying] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [songs, setSongs] = useState([]);
   const [queue, setQueue] = useState([]);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
 
   const fetchSongs = async () => {
+    setLoading(true);
     const fetchedSongs = await getAllSongs();
     setSongs(fetchedSongs);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -38,6 +48,7 @@ const MusicPlayerPage = () => {
     } else {
       toast.info("Song already in queue");
     }
+    console.log(song);
   };
 
   const handleNextTrack = () => {
@@ -56,6 +67,51 @@ const MusicPlayerPage = () => {
     }
   };
 
+  useEffect(() => {
+    let interval;
+
+    if (isPlaying && playerRef.current) {
+      interval = setInterval(() => {
+        setCurrentTime(playerRef.current.seek());
+        setCurrentSeek(playerRef.current.seek());
+      }, 1000);
+    } else {
+      clearInterval(interval);
+    }
+    console.log(currentTrackIndex);
+    return () => clearInterval(interval);
+  }, [isPlaying]);
+
+  const handleSeekChange = (e) => {
+    const newSeek = parseFloat(e.target.value);
+    playerRef.current.seek(newSeek);
+    setCurrentSeek(newSeek);
+  };
+
+  const handleLoad = () => {
+    setBuffer(false);
+    setDuration(playerRef.current.duration());
+  };
+
+  const togglePlayPause = () => {
+    if (playerRef.current) {
+      if (isPlaying) {
+        playerRef.current.pause();
+      } else {
+        playerRef.current.play();
+      }
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  const handlePreviousTrack = () => {
+    if (currentTrackIndex > 0) {
+      setCurrentTrackIndex((prevIndex) => prevIndex - 1);
+      setIsPlaying(true);
+      setBuffer(true);
+    }
+  };
+
   return (
     <>
       <div className="h-screen overflow-hidden text-eggShell bg-richBlack relative flex">
@@ -64,14 +120,38 @@ const MusicPlayerPage = () => {
           songs={songs}
           handlePlaySong={handlePlaySong}
           addToQueue={addToQueue}
+          loading={loading}
         />
-        {isPlaying ? (
+        <div className="">
+          {queue.length > 0 && (
+            <ReactHowler
+              ref={playerRef}
+              src={`http://localhost:5000${queue[currentTrackIndex].url}`}
+              playing={isPlaying}
+              format={["mp3"]}
+              onLoad={handleLoad}
+              onLoadError={() => setBuffer(false)}
+              onEnd={handleNextTrack}
+            />
+          )}
+        </div>
+        {nowPlaying ? (
           <NowPlaying
             queue={queue}
             isPlaying={isPlaying}
             setIsPlaying={setIsPlaying}
             currentTrackIndex={currentTrackIndex}
+            setCurrentTrackIndex={setCurrentTrackIndex}
             handleNextTrack={handleNextTrack}
+            loading={loading}
+            setNowPlaying={setNowPlaying}
+            duration={duration}
+            currentSeek={currentSeek}
+            handlePreviousTrack={handlePreviousTrack}
+            togglePlayPause={togglePlayPause}
+            buffering={buffering}
+            handleSeekChange={handleSeekChange}
+            currentTime={currentTime}
           />
         ) : (
           <TracksListings
@@ -82,7 +162,9 @@ const MusicPlayerPage = () => {
             setIsPlaying={setIsPlaying}
             currentTrackIndex={currentTrackIndex}
             handleNextTrack={handleNextTrack}
+            loading={loading}
             handlePlaySong={handlePlaySong}
+            setNowPlaying={setNowPlaying}
           />
         )}
 

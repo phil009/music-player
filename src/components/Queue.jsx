@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import React from "react";
+import React, { memo } from "react";
 
-const Queue = ({ queue, removeFromQueue, currentTrackIndex }) => {
+const Queue = memo(({ queue, removeFromQueue, currentTrackIndex }) => {
   return (
     <>
       <div className="p-6 w-full max-w-sm">
@@ -15,7 +15,9 @@ const Queue = ({ queue, removeFromQueue, currentTrackIndex }) => {
                 <li
                   key={track._id}
                   className={`flex items-center gap-4 py-2 border-b border-prussianBlue ${
-                    index === currentTrackIndex ? "current-track" : ""
+                    index === currentTrackIndex
+                      ? "current-track text-silverLakeBlue"
+                      : ""
                   }`}
                 >
                   <div className="w-1/12 aspect-square rounded overflow-hidden">
@@ -35,11 +37,10 @@ const Queue = ({ queue, removeFromQueue, currentTrackIndex }) => {
                   <div className="w-2/12 flex justify-end text-xs">
                     <p>{track.duration}</p>
                   </div>
-                  {index !== currentTrackIndex && (
-                    <button onClick={() => removeFromQueue(index)}>
-                      <Icon icon={"line-md:close"} />
-                    </button>
-                  )}
+
+                  <button onClick={() => removeFromQueue(index)}>
+                    <Icon icon={"line-md:close"} />
+                  </button>
                 </li>
               ))}
             </ul>
@@ -55,6 +56,6 @@ const Queue = ({ queue, removeFromQueue, currentTrackIndex }) => {
       </div>
     </>
   );
-};
+});
 
 export default Queue;
