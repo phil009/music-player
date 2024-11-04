@@ -166,7 +166,7 @@ const Upload = ({ onUploadSuccess, editSong, onUpdateSong }) => {
                 <img
                   src={
                     typeof coverArt === "string"
-                      ? `http://localhost:5000${coverArt}`
+                      ? ` https://music-player-backend-xv0z.onrender.com${coverArt}`
                       : URL.createObjectURL(coverArt)
                   }
                   alt="Cover Art"

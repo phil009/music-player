@@ -23,7 +23,7 @@ const Queue = memo(({ queue, removeFromQueue, currentTrackIndex }) => {
                   <div className="w-1/12 aspect-square rounded overflow-hidden">
                     <img
                       className="w-full h-full object-cover"
-                      src={`http://localhost:5000${track.coverArt}`}
+                      src={` https://music-player-backend-xv0z.onrender.com${track.coverArt}`}
                       alt=""
                     />
                   </div>

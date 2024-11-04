@@ -126,7 +126,7 @@ const MusicPlayerPage = () => {
           {queue.length > 0 && (
             <ReactHowler
               ref={playerRef}
-              src={`http://localhost:5000${queue[currentTrackIndex].url}`}
+              src={` https://music-player-backend-xv0z.onrender.com${queue[currentTrackIndex].url}`}
               playing={isPlaying}
               format={["mp3"]}
               onLoad={handleLoad}

@@ -50,7 +50,7 @@ const Discover = ({ songs, addToQueue, handlePlaySong, loading }) => {
                   </button>
                   <img
                     className="w-full h-full object-cover"
-                    src={`http://localhost:5000${song.coverArt}`}
+                    src={` https://music-player-backend-xv0z.onrender.com${song.coverArt}`}
                     alt=""
                   />
                 </div>
@@ -84,7 +84,7 @@ const Discover = ({ songs, addToQueue, handlePlaySong, loading }) => {
                 <div className="w-2/12 aspect-square rounded overflow-hidden">
                   <img
                     className="w-full h-full object-cover"
-                    src={`http://localhost:5000${song.coverArt}`}
+                    src={` https://music-player-backend-xv0z.onrender.com${song.coverArt}`}
                     alt=""
                   />
                 </div>

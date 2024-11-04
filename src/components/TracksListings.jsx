@@ -45,7 +45,7 @@ const TracksListings = ({
                     </button>
                     <img
                       className="w-full h-full object-cover"
-                      src={`http://localhost:5000${song.coverArt}`}
+                      src={` https://music-player-backend-xv0z.onrender.com${song.coverArt}`}
                       alt=""
                     />
                   </div>

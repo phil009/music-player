@@ -20,7 +20,7 @@ const PlayerControls = ({
             <div className="w-14 rounded shadow-md overflow-hidden aspect-square">
               <img
                 className="w-full h-full object-cover"
-                src={`http://localhost:5000${queue[currentTrackIndex].coverArt}`}
+                src={` https://music-player-backend-xv0z.onrender.com${queue[currentTrackIndex].coverArt}`}
                 alt=""
               />
             </div>
