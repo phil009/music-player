@@ -12,7 +12,7 @@ const Navigation = ({ openNav }) => {
   return (
     <>
       <div
-        className={`grid h-screen transition-all ease-in-out absolute sm:relative z-10 bg-richBlack ${
+        className={`grid h-[100dvh] transition-all ease-in-out absolute sm:relative z-10 bg-richBlack ${
           openNav ? "grid-cols-[1fr}" : "grid-cols-[0fr]"
         }`}
       >
