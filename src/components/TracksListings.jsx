@@ -14,19 +14,30 @@ const TracksListings = ({
   handlePlaySong,
   loading,
   setNowPlaying,
+  toggleQueue,
+  toggleNav,
 }) => {
   return (
     <>
-      <div className="w-full max-w-3xl h-full p-6 bg-black bg-opacity-30 border-x border-prussianBlue flex flex-col justify-between items-start pt-8">
-        <div className="w-full h-full max-h-96">
+      <div className="w-full h-full pad:max-w-3xl p-3 sm:p-6 bg-black bg-opacity-30 border-x border-prussianBlue flex flex-col justify-between items-start pt-8">
+        <div className="w-full relative h-full max-h-96">
+          <button
+            className="absolute opacity-70 w-8 h-8 top-4 right-2 sm:hidden"
+            onClick={() => toggleNav()}
+          >
+            <Icon
+              fontSize={24}
+              color="#F0EBD8"
+              icon={"material-symbols:side-navigation"}
+            />
+          </button>
           <h2 className="text-2xl font-semibold mb-6">All Songs</h2>
-
           {loading ? (
             <div className="flex w-full h-full justify-center items-center">
               <ClipLoader color="white" size={64} />
             </div>
           ) : (
-            <ul className="grid gap-4 grid-cols-4">
+            <ul className="grid gap-4 grid-cols-2 max-h-[500px] sm:max-h-max overflow-y-scroll sm:grid-cols-4">
               {songs.map((song, index) => (
                 <li
                   onClick={() => handlePlaySong(index)}
@@ -67,6 +78,7 @@ const TracksListings = ({
           handleNextTrack={handleNextTrack}
           handlePlaySong={handlePlaySong}
           setNowPlaying={setNowPlaying}
+          toggleQueue={toggleQueue}
         />
       </div>
     </>

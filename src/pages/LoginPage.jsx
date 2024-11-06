@@ -7,7 +7,7 @@ const LoginPage = () => {
   return (
     <div className="flex h-screen bg-eggShell">
       <div className="flex flex-col w-full md:w-2/3 justify-center items-center">
-        <div className="text-center border border-richBlack p-6 rounded-lg w-3/4 md:w-1/2">
+        <div className="text-center border border-richBlack p-4 sm:p-6 rounded-lg w-3/4 md:w-1/2">
           <Login />
           <div className="mt-8 w-full">
             <p className="text-xs">Don't have an account?</p>

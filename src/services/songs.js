@@ -1,5 +1,9 @@
 import axios from "axios";
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  "https://music-player-backend-xv0z.onrender.com/api";
+
 const getToken = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   return user ? user.token : null;
@@ -9,7 +13,7 @@ export const uploadSong = async (songData) => {
   try {
     const token = getToken();
     console.log("Token:", token);
-    const response = await axios.post("/api/songs", songData, {
+    const response = await axios.post(`${API_BASE_URL}/songs`, songData, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "multipart/form-data",
@@ -23,14 +27,14 @@ export const uploadSong = async (songData) => {
 };
 
 export const getAllSongs = async () => {
-  const response = await axios.get("/api/songs");
+  const response = await axios.get(`${API_BASE_URL}/songs`);
   return response.data;
 };
 
 export const updateSong = async (ID, editedSong) => {
   try {
     const token = getToken();
-    const response = await axios.put(`/api/songs/${ID}`, editedSong, {
+    const response = await axios.put(`/songs/${ID}`, editedSong, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "multipart/form-data",
@@ -48,7 +52,7 @@ export const updateSong = async (ID, editedSong) => {
 export const deleteSong = async (ID) => {
   try {
     const token = getToken();
-    const response = await axios.delete(`/api/songs/${ID}`, {
+    const response = await axios.delete(`/songs/${ID}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

@@ -10,6 +10,9 @@ export default {
         silverLakeBlue: "#748CAB",
         eggShell: "#F0EBD8",
       },
+      screens: {
+        pad: "894px",
+      },
     },
   },
   plugins: [],
