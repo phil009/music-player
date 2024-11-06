@@ -5,7 +5,7 @@ import Login from "../components/Login";
 
 const LoginPage = () => {
   return (
-    <div className="flex h-screen bg-eggShell">
+    <div className="flex h-[100dvh] bg-eggShell">
       <div className="flex flex-col w-full md:w-2/3 justify-center items-center">
         <div className="text-center border border-richBlack p-4 sm:p-6 rounded-lg w-3/4 md:w-1/2">
           <Login />

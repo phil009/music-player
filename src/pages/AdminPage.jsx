@@ -40,7 +40,7 @@ const AdminPage = () => {
 
   return (
     <>
-      <div className="h-screen text-eggShell bg-richBlack relative flex">
+      <div className="h-[100dvh] text-eggShell bg-richBlack relative flex">
         <Navigation />
         <Upload
           onUploadSuccess={handleUploadSuccess}

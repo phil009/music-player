@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const SignUpPage = () => {
   return (
     <>
-      <div className="bg-richBlack flex h-screen bg-">
+      <div className="bg-richBlack flex h-[100dvh] bg-">
         <div className="w-full md:w-2/3 flex justify-center items-center">
           <div className="border border-eggShell p-4 md:p-6 rounded-lg text-center w-3/4  md:w-1/2 justify-items-center text-eggShell">
             <SignUp />

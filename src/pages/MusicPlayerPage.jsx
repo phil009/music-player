@@ -124,7 +124,7 @@ const MusicPlayerPage = () => {
 
   return (
     <>
-      <div className="h-screen overflow-hidden text-eggShell bg-richBlack relative flex">
+      <div className="h-[100dvh] overflow-hidden text-eggShell bg-richBlack relative flex">
         <Navigation openNav={openNav} />
         <Discover
           songs={songs}
