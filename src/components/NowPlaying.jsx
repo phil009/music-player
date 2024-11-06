@@ -23,7 +23,7 @@ const NowPlaying = ({
 
   return (
     <>
-      <div className="relative w-full max-w-3xl p-6 bg-black bg-opacity-30 border-x border-prussianBlue grid justify-items-center">
+      <div className="relative w-full p-6 bg-black bg-opacity-30 border-x border-prussianBlue grid justify-items-center">
         <button
           className="absolute top-6 right-6"
           onClick={() => setNowPlaying(false)}
@@ -35,7 +35,7 @@ const NowPlaying = ({
         <div>
           {queue.length > 0 && (
             <div className="grid justify-items-center gap-8">
-              <div className="w-80 rounded-xl shadow-md overflow-hidden aspect-square">
+              <div className="w-56 sm:w-80 rounded-xl shadow-md overflow-hidden aspect-square">
                 <img
                   className="w-full h-full object-cover"
                   src={` https://music-player-backend-xv0z.onrender.com${queue[currentTrackIndex].coverArt}`}
@@ -44,7 +44,7 @@ const NowPlaying = ({
               </div>
               <div className="w-full player-controls text-center">
                 <div className="flex items-center gap-2">
-                  <p className="font-medium opacity-70">
+                  <p className="text-xs sm:text-sm sm:font-medium opacity-70">
                     {formatDuration(currentTime)}
                   </p>
                   <input
@@ -54,9 +54,9 @@ const NowPlaying = ({
                     step="0.1"
                     value={currentSeek}
                     onChange={handleSeekChange}
-                    className="custom-seekbar w-full min-w-96 my-6"
+                    className="custom-seekbar w-full my-6"
                   />
-                  <p className="font-medium opacity-70">
+                  <p className="text-xs sm:text-sm sm:font-medium opacity-70">
                     {formatDuration(duration)}
                   </p>
                 </div>
@@ -83,10 +83,10 @@ const NowPlaying = ({
                   </button>
                 </div>
 
-                <h2 className="text-2xl font-semibold">
+                <h2 className="text:lg sm:text-2xl font-semibold">
                   {queue[currentTrackIndex].title}
                 </h2>
-                <p className="text-sm opacity-50">
+                <p className="text-xs sm:text-sm opacity-50">
                   {queue[currentTrackIndex].artist}
                 </p>
               </div>

@@ -22,7 +22,7 @@ const Discover = ({ songs, addToQueue, handlePlaySong, loading }) => {
   }, []);
 
   return (
-    <div className="p-6 max-w-[350px]">
+    <div className="p-6 hidden xl:block w-3/12 max-w-[350px]">
       <h1 className="font-bold text-3xl mb-6">
         Discover <br /> New Music
       </h1>

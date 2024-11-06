@@ -20,6 +20,8 @@ const MusicPlayerPage = () => {
   const [queue, setQueue] = useState([]);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [openQueue, setOpenQueue] = useState(false);
+  const [openNav, setOpenNav] = useState(false);
 
   const fetchSongs = async () => {
     setLoading(true);
@@ -112,10 +114,18 @@ const MusicPlayerPage = () => {
     }
   };
 
+  const toggleQueue = () => {
+    setOpenQueue(!openQueue);
+  };
+
+  const toggleNav = () => {
+    setOpenNav(!openNav);
+  };
+
   return (
     <>
       <div className="h-screen overflow-hidden text-eggShell bg-richBlack relative flex">
-        <Navigation />
+        <Navigation openNav={openNav} />
         <Discover
           songs={songs}
           handlePlaySong={handlePlaySong}
@@ -155,6 +165,7 @@ const MusicPlayerPage = () => {
           />
         ) : (
           <TracksListings
+            toggleNav={toggleNav}
             songs={songs}
             queue={queue}
             addToQueue={addToQueue}
@@ -165,10 +176,13 @@ const MusicPlayerPage = () => {
             loading={loading}
             handlePlaySong={handlePlaySong}
             setNowPlaying={setNowPlaying}
+            toggleQueue={toggleQueue}
           />
         )}
 
         <Queue
+          openQueue={openQueue}
+          setOpenQueue={setOpenQueue}
           queue={queue}
           removeFromQueue={removeFromQueue}
           currentTrackIndex={currentTrackIndex}

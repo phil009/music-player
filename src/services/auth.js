@@ -1,8 +1,15 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  "https://music-player-backend-xv0z.onrender.com/api";
+
 export const login = async (username, password) => {
-  const response = await axios.post("/api/users/login", { username, password });
+  const response = await axios.post(`${API_BASE_URL}/users/login`, {
+    username,
+    password,
+  });
   const token = response.data.token;
   localStorage.setItem("user", token);
 
@@ -12,7 +19,7 @@ export const login = async (username, password) => {
 };
 
 export const signup = async (username, password) => {
-  const response = await axios.post("/api/users/signup", {
+  const response = await axios.post(`${API_BASE_URL}/users/signup`, {
     username,
     password,
   });
